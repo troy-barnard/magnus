@@ -1,0 +1,2 @@
+# magnus
+Discord Bot
