@@ -1,0 +1,10 @@
+{
+  "help" : {
+    "name" : "m.help",
+    "description" : "I'll respond with this help command."
+  },
+  "speak" : {
+    "name" : "m.speak",
+    "description" : "I'll respond like a ~g o o d b o y e~."
+  }
+}
