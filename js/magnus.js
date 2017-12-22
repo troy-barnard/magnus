@@ -1,17 +1,34 @@
 const Discord = require('discord.js');
-const client = new Discord.Client();
-const config = require('./config.js');
+const fs = require('fs');
+const music = require('discord.js-music-v11');
 
 const commands = require('../json/commands.json');
+const config = require('./config.js');
+
+const client = new Discord.Client();
+
 const functions = {
   "help" : handleHelp,
-  "speak" : handleSpeak
+  "h" : handleHelp,
+  "speak" : handleSpeak,
+  "chill" : handleChill,
+  "stop" : handleStop
 }
+
+const musicOptions = {
+  prefix : "m",
+  volume : 5
+}
+
 
 // Main Method
 function main() {
   client.on('ready', () => {
     console.log('I am ready!');
+    // Set presence
+    client.user.setGame("m.help for commands");
+    // set-up music player
+    music(client, musicOptions);
   });
 
   client.on('message', message => {
@@ -25,11 +42,12 @@ function handleMessage(message) {
   let command = message.content.split(' ')[0];
   if (command.startsWith("m.")) {
     command = command.replace("m.","");
-    if (commands[command] != undefined) {
+    if (functions[command] != undefined) {
       console.log(functions[command]);
       functions[command](message);
     } else {
-      console.log("Did not recognize command '" + command + "'");
+      // Command started with 'm.' but is not supported
+      message.reply("Did not recognize command '" + command + "'");
     }
   }
 }
@@ -47,6 +65,33 @@ function handleHelp(message) {
 
 function handleSpeak(message) {
 
+}
+
+function handleChill(message) {
+
+  if (!message.guild) {
+    message.reply("Sorry, you must make this command in a public channel.")
+    return;
+  }
+
+  if (message.member.voiceChannel) {
+    message.member.voiceChannel.join().then(connection => { // Connection is an instance of VoiceConnection
+        message.reply('I have successfully connected to the channel!');
+
+        music.play("https://www.youtube.com/watch?v=gwDoRPcPxtc");
+      })
+      .catch(console.log);
+  } else {
+    message.reply('You need to join a voice channel first!');
+  }
+}
+
+function handleStop(message) {
+  console.log("client.voiceChannel", client.user);
+  if (client.VoiceConnections) {
+    client.voiceConnections[0].channel.leave();
+    message.reply("I have disconnected from the voice channel.")
+  }
 }
 
 main();
