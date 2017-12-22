@@ -1,10 +1,47 @@
 {
   "help" : {
     "name" : "m.help",
-    "description" : "I'll respond with this help command."
+    "description" : "I'll respond with this help command.",
+    "example" : "m.help"
   },
-  "speak" : {
-    "name" : "m.speak",
-    "description" : "I'll respond like a ~g o o d b o y e~."
+  "play" : {
+    "name" : "m.play",
+    "description" : "I will play a video/music. I can take a URL from various services (YouTube, Vimeo, YouKu, etc). You can also search using a string.",
+    "example" : "m.play chillpop"
+  },
+  "skip" : {
+    "name" : "m.skip",
+    "description" : "I will skip the specified number of songs",
+    "example" : "m.skip 1"
+  },
+  "queue" : {
+    "name" : "m.queue",
+    "description" : "I will display the current music/audio queue.",
+    "example" : "m.queue"
+  },
+  "pause" : {
+    "name" : "m.pause",
+    "description" : "I'll pause audio playback.",
+    "example" : "m.pause"
+  },
+  "resume" : {
+    "name" : "m.resume",
+    "description" : "I will resume audio playback.",
+    "example" : "m.resume"
+  },
+  "volume" : {
+    "name" : "m.volume",
+    "description" : "I'll adjust the audio playback volume [1-200]",
+    "example" : "m.volume 5"
+  },
+  "leave" : {
+    "name" : "m.leave",
+    "description" : "I will clear the music/audio queue and leave the voice channel.",
+    "example" : "m.leave"
+  },
+  "clearqueue" : {
+    "name" : "m.clearqueue",
+    "description" : "I will clear the music/audio.",
+    "example" : "m.clearqueue"
   }
 }
