@@ -4,9 +4,9 @@
 A disocrd bot that can play music!
 
 **Current Commands**
-*m.help*
-  -- responds with list of commands
-*m.play*
+*m.help* \n
+  -- responds with list of commands \n
+*m.play* \n
   -- plays audio from either a url or a search query (or adds to queue)
 *m.skip*
   -- skips the given amount of queued songs
