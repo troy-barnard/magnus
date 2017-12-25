@@ -1,7 +1,7 @@
 # Magnus
 ![Image of Yaktocat](/static/magnus.png)
 
-A disocrd bot written in JavaScript using [discord.js](https://www.discord.js.org) that can play music thanks to [discord.js-music-v11](https://www.npmjs.com/package/discord.js-music-v11)!
+A disocrd bot written in JavaScript using [discord.js](https://discord.js.org/#/) that can play music thanks to [discord.js-music-v11](https://www.npmjs.com/package/discord.js-music-v11)!
 
 **Current Commands**
 *m.help*
