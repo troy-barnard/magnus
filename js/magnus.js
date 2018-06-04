@@ -1,8 +1,9 @@
 const Discord = require('discord.js');
 const fs = require('fs');
-const music = require('discord.js-music-v11');
+const ytdl = require('ytdl-core');
 
 const commands = require('../json/commands.json');
+const chillStreams = require('../json/chill.json').streams;
 const config = require('./config.js');
 
 const client = new Discord.Client();
@@ -26,9 +27,10 @@ function main() {
   client.on('ready', () => {
     console.log('I am ready!');
     // Set presence
-    client.user.setGame("m.help for commands");
+    client.user.setActivity("m.help for commands");
     // set-up music player
-    music(client, musicOptions);
+    ytdl('http://www.youtube.com/watch?v=A02s8omM_hI')
+    .pipe(fs.createWriteStream('stream.mp4'));
   });
 
   client.on('message', message => {
@@ -64,7 +66,7 @@ function handleHelp(message) {
 }
 
 function handleSpeak(message) {
-
+  message.reply('Bark!')
 }
 
 function handleChill(message) {
@@ -77,8 +79,19 @@ function handleChill(message) {
   if (message.member.voiceChannel) {
     message.member.voiceChannel.join().then(connection => { // Connection is an instance of VoiceConnection
         message.reply('I have successfully connected to the channel!');
-
-        music.play("https://www.youtube.com/watch?v=gwDoRPcPxtc");
+        // choose a random stream
+        let rdm = randomNum(0, chillStreams.length - 1)
+        console.log(chillStreams[rdm])
+        ytdl(chillStreams[rdm])
+        .pipe(fs.createWriteStream('stream.mp3'))
+        .on('finish', () => {
+          console.log('download done')
+          const dispatcher = connection.playFile('stream.mp3');
+            dispatcher.on('end', () => {
+            // The song has finished
+            message.member.voiceChannel.leave();
+          });
+        });
       })
       .catch(console.log);
   } else {
@@ -92,6 +105,10 @@ function handleStop(message) {
     client.voiceConnections[0].channel.leave();
     message.reply("I have disconnected from the voice channel.")
   }
+}
+
+function randomNum(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 main();
