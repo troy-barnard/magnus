@@ -9,23 +9,22 @@ const config = require('./config.js');
 const client = new Discord.Client();
 
 const functions = {
-  "help" : handleHelp,
-  "h" : handleHelp,
-  "speak" : handleSpeak,
-  "chill" : handleChill,
-  "stop" : handleStop
+  'help': handleHelp,
+  'h': handleHelp,
+  'play': handleMusic,
+  'skip': handleMusic,
+  'queue': handleMusic,
+  'pause': handleMusic,
+  'resume': handleMusic,
+  'volume': handleMusic,
+  'leave': handleMusic,
+  'clearqueue': handleMusic
 }
-
-const musicOptions = {
-  prefix : "m",
-  volume : 5
-}
-
 
 // Main Method
-function main() {
+function main () {
   client.on('ready', () => {
-    console.log('I am ready!');
+    console.log('I am ready!')
     // Set presence
     client.user.setActivity("m.help for commands");
     // set-up music player
@@ -34,32 +33,32 @@ function main() {
   });
 
   client.on('message', message => {
-    handleMessage(message);
-  });
+    handleMessage(message)
+  })
 
-  client.login(config.discord.token);
+  client.login(config.discord.token)
 }
 
-function handleMessage(message) {
-  let command = message.content.split(' ')[0];
-  if (command.startsWith("m.")) {
-    command = command.replace("m.","");
-    if (functions[command] != undefined) {
-      console.log(functions[command]);
-      functions[command](message);
+function handleMessage (message) {
+  let command = message.content.split(' ')[0]
+  if (command.startsWith('m.')) {
+    command = command.replace('m.', '')
+    if (functions[command] !== undefined) {
+      functions[command](message)
     } else {
       // Command started with 'm.' but is not supported
-      message.reply("Did not recognize command '" + command + "'");
+      message.reply('Did not recognize command ' + command)
     }
   }
 }
 
-function handleHelp(message) {
+function handleHelp (message) {
   let embed = new Discord.RichEmbed()
-    .setTitle("Hello I'm Magnus. Please refer to my command list below.");
-  Object.entries(commands).forEach( (command) => {
-    let response = Object.entries(command)[1][1];
-    embed.addField(response.name, response.description);
+    .setTitle('Hello I\'m Magnus. Please refer to my command list below.')
+  Object.entries(commands).forEach((command) => {
+    let response = Object.entries(command)[1][1]
+    embed.addField(response.name, response.description + '\nExample: ' +
+      response.example)
   })
 
   message.channel.send(embed);
@@ -99,12 +98,8 @@ function handleChill(message) {
   }
 }
 
-function handleStop(message) {
-  console.log("client.voiceChannel", client.user);
-  if (client.VoiceConnections) {
-    client.voiceConnections[0].channel.leave();
-    message.reply("I have disconnected from the voice channel.")
-  }
+function handleMusic () {
+  // music is handled
 }
 
 function randomNum(min, max) {
