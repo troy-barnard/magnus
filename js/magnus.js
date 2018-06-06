@@ -3,7 +3,7 @@ const fs = require('fs');
 const ytdl = require('ytdl-core');
 
 const commands = require('../json/commands.json');
-const chillStreams = require('../json/chill.json').streams;
+const chillMixes = require('../json/chill.json').mixes;
 const config = require('./config.js');
 
 const client = new Discord.Client();
@@ -11,14 +11,8 @@ const client = new Discord.Client();
 const functions = {
   'help': handleHelp,
   'h': handleHelp,
-  'play': handleMusic,
-  'skip': handleMusic,
-  'queue': handleMusic,
-  'pause': handleMusic,
-  'resume': handleMusic,
-  'volume': handleMusic,
-  'leave': handleMusic,
-  'clearqueue': handleMusic
+  'chill': handleChill,
+  'c': handleChill
 }
 
 // Main Method
@@ -27,9 +21,7 @@ function main () {
     console.log('I am ready!')
     // Set presence
     client.user.setActivity("m.help for commands");
-    // set-up music player
-    ytdl('http://www.youtube.com/watch?v=A02s8omM_hI')
-    .pipe(fs.createWriteStream('stream.mp4'));
+    // downloadMix(0)
   });
 
   client.on('message', message => {
@@ -76,20 +68,18 @@ function handleChill(message) {
   }
 
   if (message.member.voiceChannel) {
-    message.member.voiceChannel.join().then(connection => { // Connection is an instance of VoiceConnection
-        message.reply('I have successfully connected to the channel!');
+    let botVC = message.member.voiceChannel
+    botVC.join().then(connection => { // Connection is an instance of VoiceConnection
+        message.reply('Playing chill music on Voice Channel: ' + botVC.name);
         // choose a random stream
-        let rdm = randomNum(0, chillStreams.length - 1)
-        console.log(chillStreams[rdm])
-        ytdl(chillStreams[rdm])
-        .pipe(fs.createWriteStream('stream.mp3'))
-        .on('finish', () => {
-          console.log('download done')
-          const dispatcher = connection.playFile('stream.mp3');
-            dispatcher.on('end', () => {
-            // The song has finished
-            message.member.voiceChannel.leave();
-          });
+        let rdm = randomNum(0, chillMixes.length - 1)
+        console.log(chillMixes[rdm])
+        const streamOptions = { seek: 0, volume: 0.025 };
+        let stream = ytdl(chillMixes[rdm], { quality: 'lowest', filter: 'audioonly'})
+        const dispatcher = connection.playStream(stream, streamOptions);
+        dispatcher.on('end', () => {
+          // The song has finished
+          botVC.leave()
         });
       })
       .catch(console.log);
@@ -98,12 +88,8 @@ function handleChill(message) {
   }
 }
 
-function handleMusic () {
-  // music is handled
-}
-
 function randomNum(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+    return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
-main();
+main()
