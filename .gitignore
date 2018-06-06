@@ -60,5 +60,4 @@ typings/
 # config.js file with tokens
 js/config.js
 
-js/stream.mp3
 .vscode
