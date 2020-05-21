@@ -43,5 +43,15 @@
     "name" : "m.clearqueue",
     "description" : "I will clear the music/audio.",
     "example" : "m.clearqueue"
+  },
+  "chill" : {
+    "name" : "m.chill",
+    "description" : "I will start playing a set of chillpop music.",
+    "example" : "m.chill"
+  },
+  "movie" : {
+    "name" : "m.movie",
+    "description" : "I will search IMDB for information on a movie.",
+    "example" : "m.movie bloodsport"
   }
 }
