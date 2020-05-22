@@ -1,10 +1,17 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 const ytdl = require('ytdl-core');
+const http = require('http')
+const url = require('url');
+//const { Client, MessageAttachment, MessageEmbed } = require('discord.js');
 
 const commands = require('../json/commands.json');
 const chillMixes = require('../json/chill.json').mixes;
 const config = require('./config.js');
+const keys = require('../json/api-keys.json')
+const omdbKey = keys["omdb"]
+const imgFlipUsername = keys["imgFlipUsername"]
+const imgFlipPassword = keys["imgFlipPassword"]
 
 const client = new Discord.Client();
 
@@ -12,7 +19,10 @@ const functions = {
   'help': handleHelp,
   'h': handleHelp,
   'chill': handleChill,
-  'c': handleChill
+  'c': handleChill,
+  'movie': handleMovie,
+  'm': handleMovie,
+  'meme': handleMeme
 }
 
 // Main Method
@@ -20,7 +30,9 @@ function main () {
   client.on('ready', () => {
     console.log('I am ready!')
     // Set presence
-    client.user.setActivity("m.help for commands");
+    //client.user.setActivity("m.help for commands");
+    console.log(omdbKey)
+    //handleMovie("bloodsport")
     // downloadMix(0)
   });
 
@@ -90,6 +102,84 @@ function handleChill(message) {
 
 function randomNum(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min
+}
+
+function handleMovie(message) {
+    let command = message.content.split(' ')[0]
+    let query = message.content.replace(command, '').trim()
+    if (query != '') {
+    console.log("handle movie query: ", query)      
+      http.get('http://www.omdbapi.com/?t=' + query + '&apikey=' + omdbKey, (res) => {
+        const { statusCode } = res;
+        const contentType = res.headers['content-type'];
+
+        let error;
+        if (statusCode !== 200) {
+          error = new Error('Request Failed.\n' +
+                            `Status Code: ${statusCode}`);
+        } else if (!/^application\/json/.test(contentType)) {
+          error = new Error('Invalid content-type.\n' +
+                            `Expected application/json but received ${contentType}`);
+        }
+        if (error) {
+          console.error(error.message);
+          // Consume response data to free up memory
+          res.resume();
+          return;
+        }
+
+        res.setEncoding('utf8');
+        let rawData = '';
+        res.on('data', (chunk) => { rawData += chunk; });
+        res.on('end', () => {
+          try {
+            const parsedData = JSON.parse(rawData);
+            //console.log("PARSED DATA \n")
+            //console.log(parsedData);
+            movieReply(message, parsedData);
+          } catch (e) {
+            console.error(e.message);
+          }
+        });
+      }).on('error', (e) => {
+        console.error(`Got error: ${e.message}`);
+      });
+
+  }
+}
+
+function movieReply(message, data) {
+  if (data.Title != null) {
+    let ratings = data.Ratings
+    let ratingsString = ''
+    const exampleEmbed = new Discord.RichEmbed()
+    .setColor('#0099ff')
+    .setImage(data.Poster)
+    .setTitle(data.Title)
+    .addField( 'Year', data.Year)
+    .addField('Rated', data.Rated)
+    .addField('Directed By', data.Director)
+    .addField('Staring', data.Actors)
+    .addField('Plot', data.Plot)
+    
+    if (ratings) {
+      ratings.forEach(r => {
+        //console.log(r)
+        let source = r.Source
+        let score = r.Value
+        ratingsString += `___${source}___: ${score} \n`
+        exampleEmbed.addField(source + ': ', score)
+      })
+    }
+    message.reply(exampleEmbed);
+  } else {
+    message.reply("Sorry bud, I couldn't find any results for that.")
+  }
+    
+}
+
+function handleMeme(message) {
+  console.log("handleMeme")
 }
 
 main()
