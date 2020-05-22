@@ -10,6 +10,8 @@ const chillMixes = require('../json/chill.json').mixes;
 const config = require('./config.js');
 const keys = require('../json/api-keys.json')
 const omdbKey = keys["omdb"]
+const imgFlipUsername = keys["imgFlipUsername"]
+const imgFlipPassword = keys["imgFlipPassword"]
 
 const client = new Discord.Client();
 
@@ -19,7 +21,8 @@ const functions = {
   'chill': handleChill,
   'c': handleChill,
   'movie': handleMovie,
-  'm': handleMovie 
+  'm': handleMovie,
+  'meme': handleMeme
 }
 
 // Main Method
@@ -173,6 +176,10 @@ function movieReply(message, data) {
     message.reply("Sorry bud, I couldn't find any results for that.")
   }
     
+}
+
+function handleMeme(message) {
+  console.log("handleMeme")
 }
 
 main()
