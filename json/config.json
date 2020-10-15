@@ -1,0 +1,21 @@
+{
+    "commandPrefix": "m.",
+    "chill": {
+        "mixes": [
+            "https://www.youtube.com/watch?v=-FlxM_0S2lA&t=",
+            "https://www.youtube.com/watch?v=eSjSozKL_EA&t=0s",
+            "https://www.youtube.com/watch?v=o0TZgKbUL7s"
+        ],
+        "streamOptions": {
+            "seek": 0,
+            "volume": 0.025
+        },
+        "ytdlOptions": {
+            "quality": "lowestaudio",
+            "filter": "audioonly"
+        }
+    },
+    "omdb": {
+        "host": "http://www.omdbapi.com"
+    }
+}

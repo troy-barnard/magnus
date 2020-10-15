@@ -1,0 +1,66 @@
+{
+    "UNKNOWN_COMMAND": {
+        "console": {
+            "type": "warning",
+            "message": "User {user} asked Magnus to perform the action \"{action}\", without an associated handler"
+        },
+        "discord": "I'm sorry, I'm not familiar with the \"{action}\" command..."
+    },
+
+    "FAILURE_COMMAND": {
+        "console": {
+            "type": "error",
+            "message": "Something went horribly wrong in the handler for {command}, like is there something undefined in there or misspelled?? Argument Dump: {args}"
+        },
+        "discord": "I'm sorry, I could not process that command..."
+    },
+
+    "SUCCESSFUL_COMMAND": {
+        "console": {
+            "type": "info",
+            "message": "User {user} asked Magnus to perform the action \"{action}\" successfully"
+        }
+    },
+
+    "MAGNUS_ONLINE": {
+        "console": {
+            "type": "success",
+            "message": "Magnus online as {user}"
+        }
+    },
+
+    "MAGNUS_INIT": {
+        "console": {
+            "type": "info",
+            "message": "Magnus booting up and logging into Discord"
+        }
+    },
+
+    "movie": { },
+    "chill": {
+        "NONPUBLIC_CHANNEL": {
+            "console": {
+                "type": "warning",
+                "message": "User {user} asked Magnus to perform the action \"{action}\" while in an unacceptable channel: \"{channel}\""
+            },
+            "discord": "I'm sorry, you must make this command in a public channel. Unfortunately, \"{channel}\" doesn't count."
+        },
+        "NON_VOICE_CHANNEL": {
+            "console": {
+                "type": "warning",
+                "message": "User {user} asked Magnus to perform the action \"{action}\" while not in a voice channel"
+            },
+            "discord": "I'm sorry, you must join a voice channel before I can start dropping chill beats in it!"
+        },
+        "UNABLE_TO_CONNECT": {
+            "console": {
+                "type": "error",
+                "message": "Magnus was unable to join the voice channel \"{voiceChannel}\""
+            },
+            "discord": "I'm sorry, I wasn't able to join the voice channel... maybe try again in a bit?"
+        }
+    },
+    "help": {},
+    "speak": {},
+    "meme": {}
+}

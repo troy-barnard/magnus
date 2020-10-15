@@ -1,3 +1,11 @@
+# Magnus gitignore file
+
+# Secrets
+secrets.json
+
+# VS Code crap
+*.code-workspace
+
 # Logs
 logs
 *.log
