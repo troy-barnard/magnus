@@ -6,10 +6,11 @@ const Utils = require('./utils');
 const handlers = require('./handlers');
 const MSG = require('../json/messages.json');
 const config = require('../json/config.json');
-const discordToken = require('../json/secrets.json').discord.token;
+const discordToken = require('../json/secrets.json').discord.auth.token;
 
 // Main function
 function main () {
+  console.log(discordToken)
   Utils.log(MSG.MAGNUS_INIT);
   const client = new Discord.Client();
   
