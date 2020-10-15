@@ -1,0 +1,15 @@
+on: deployment
+name: "Setup secrets json"
+
+jobs:
+  my-job:
+    name: My Job
+    runs-on: ubuntu-latest
+    steps:
+    - name: create-api-keys-json
+      id: create-api-keys-json
+      uses: jsdaniell/create-json@1.1.2
+      with:
+        name: "secrets.json"
+        json: ${{ secrets.SECRETS_JSON }}
+        dir: 'json/' 
