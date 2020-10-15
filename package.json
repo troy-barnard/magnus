@@ -4,7 +4,8 @@
   "description": "Discord bot",
   "main": "js/magnus.js",
   "scripts": {
-    "test": "node js/magnus.js"
+    "test": "node js/magnus.js",
+    "start": "node js/magnus.js"
   },
   "repository": {
     "type": "git",
@@ -23,22 +24,12 @@
   },
   "homepage": "https://github.com/troytheboy/magnus#readme",
   "dependencies": {
-    "discord.js": "^11.6.4",
-    "discord.js-music": "^2.1.0",
-    "discord.js-music-v11": "^1.3.4",
-    "ffmpeg-binaries": "^3.2.2-3",
-    "http": "0.0.1-security",
-    "node-opus": "^0.2.7",
-    "url": "^0.11.0",
-    "youtube-dl": "^1.11.1",
-    "ytdl-core": "^0.9.1"
+      "@discordjs/opus": "^0.3.2",
+      "discord.js": "^12.2.0",
+      "chalk": "^4.0.0",
+      "ytdl-core": "^2.1.4"
   },
   "devDependencies": {
-    "eslint": "^4.14.0",
-    "eslint-config-standard": "^11.0.0-beta.0",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-node": "^5.2.1",
-    "eslint-plugin-promise": "^3.6.0",
-    "eslint-plugin-standard": "^3.0.1"
+    "eslint": "^7.0.0"
   }
 }
