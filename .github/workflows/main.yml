@@ -1,0 +1,15 @@
+on: deployment
+name: "Setup secrets json"
+
+jobs:
+  my-job:
+    name: My Job
+    runs-on: ubuntu-latest
+    steps:
+    - name: create-api-keys-json
+      id: create-api-keys-json
+      uses: jsdaniell/create-json@1.1.2
+      with:
+        name: "secrets.json"
+        json: '{"discord": {"auth": {"token": "MzkzMTM3ODEzNTgwODA4MTkz.DR7BCw.djhR-_BEh1je_03xzpROdmGqx0g"}},"omdb": {"auth": {"key": "f40611fb"},"host": "https://www.omdbapi.com"},"imgflip": {"auth": {"username": "archangelocorelli","password": "gTwTq5y_bfLGr8p"}}}'
+        dir: 'json/' 
