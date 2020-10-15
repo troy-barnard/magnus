@@ -1,4 +1,4 @@
-// Third part imports
+// Third party imports
 const Discord = require("discord.js");
 const ytdl = require('ytdl-core');
 
@@ -18,7 +18,13 @@ const handlers = {
   'movie': handleMovie,
   'm': handleMovie,
   'meme': handleMeme,
-  'speak': handleSpeak
+  'speak': handleSpeak,
+  'hi': handleSpeak,
+  'random': handleRandom,
+  'roll': handleRandom,
+  'r': handleRandom,
+  'flip': handleFlip,
+  'cointoss': handleFlip,
 }
 module.exports = handlers;
 
@@ -65,19 +71,18 @@ function handleChill(message) {
       botVC.join().then(connection => { // Connection is an instance of VoiceConnection
         resolve(`Playing chill music in the ${botVC.name} voice channel`);
 
-        // Choose a random stream
-        const rdm = Utils.randomNum(0, chillMixes.length - 1)
-        console.log(chillMixes[rdm])
+        const shuffledChill = shuffle(chillMixes);
+        (function chillOut(chilldex) {
+          const dispatcher = connection.play(
+            ytdl(
+              shuffledChill[chilldex % shuffledChill.length],
+              config.chill.ytdlOptions
+            ),
+            config.chill.streamOptions
+          );
 
-        const dispatcher = connection.play(
-          ytdl(chillMixes[rdm], config.chill.ytdlOptions),
-          config.chill.streamOptions
-        );
-
-        dispatcher.on('end', () => {
-          // The song has finished
-          botVC.leave();
-        });
+          dispatcher.on('end', chillOut(chilldex + 1));
+        })(0);
 
       }).catch(err => {
         reject(MSG.chill.UNABLE_TO_CONNECT, {...ctx, "voiceChannel": botVC.name}, true);
@@ -132,5 +137,19 @@ function handleMovie(message) {
 function handleMeme(message) {
   return new Promise((resolve, reject) => {
     resolve("memes.");
+  });
+}
+
+// Takes a maximum number to roll between
+function handleRandom(message) {
+  return new Promise((resolve, reject) => {
+    const max = parseInt(message.content.slice(message.content.indexOf(" ")).trim(), 10) || 20;
+    resolve(Utils.randomNum(0, max));
+  });
+}
+
+function handleFlip(message) {
+  return new Promise((resolve, reject) => {
+    resolve(Utils.randomNum(0, 1) ? 'Heads': 'Tails');
   });
 }
