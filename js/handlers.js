@@ -31,7 +31,7 @@ module.exports = handlers;
 
 function handleHelp (_message) {
   return new Promise((resolve, reject) => {
-    const embed = new Discord.MessageEmbed()
+    const embed = new Discord.RichEmbed()
       .setTitle('Hello I\'m Magnus. Please refer to my command list below.')
     
     for (let command in commands) {
@@ -103,7 +103,7 @@ function handleMovie(message) {
         if (json.Title) {
           const ratings = json.Ratings;
           let ratingsString = '';
-          const embed = new Discord.MessageEmbed()
+          const embed = new Discord.RichEmbed()
             .setColor('#0099ff')
             .setImage(json.Poster)
             .setTitle(json.Title)

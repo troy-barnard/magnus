@@ -5,7 +5,7 @@ const config = require("../json/config.json").omdb;
 function query(queryString) {
     return new Promise((resolve, reject) => {
         const url = new URL(config.host);
-        url.searchParams.set("apikey", secrets.key);
+        url.searchParams.set("apikey", secrets.auth.key);
         url.searchParams.set("t", queryString);
         http.get(url.toString(), response => {
             const { statusCode } = response;
