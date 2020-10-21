@@ -57,6 +57,6 @@
   "meme" : {
     "name" : "m.meme",
     "description" : "I will create a meme for you.",
-    "example" : "m.meme 1 topText bottomText"
+    "example" : "m.meme 1 text1 \\ text2"
   }
 }

@@ -4,6 +4,7 @@ const ytdl = require('ytdl-core');
 
 // Local imports
 const omdb = require("./omdb");
+const meme = require("./imgflip");
 const Utils = require('./utils');
 const commands = require('../json/commands.json');
 const config = require('../json/config.json');
@@ -136,7 +137,22 @@ function handleMovie(message) {
 
 function handleMeme(message) {
   return new Promise((resolve, reject) => {
-    resolve("memes.");
+    try {
+      // console.log('responding to message:', message.content)
+      let content = message.content
+      let params = content.trim().split(" ")
+      // let subtringIndex = params.shift().length
+      let memeIndex = params[1]
+      let substrIndex = content.indexOf(memeIndex) + memeIndex.length
+      let memeTextArray = content.substring(substrIndex).split('\\')
+      // subtringIndex += memeIndex.toString().length + 2
+      // let text = message.content.trim().subtring(subtringIndex)
+      // console.log("memeIndex", memeIndex) 
+      // console.log("params", params)
+      resolve(meme.caption_image(memeIndex, memeTextArray[0], memeTextArray[1]));
+    } catch (e) {
+      reject(e)
+    }
   });
 }
 

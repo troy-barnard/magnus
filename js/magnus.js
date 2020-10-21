@@ -7,6 +7,8 @@ const handlers = require('./handlers');
 const MSG = require('../json/messages.json');
 const config = require('../json/config.json');
 const discordToken = require('../json/secrets.json').discord.auth.token;
+const imgflip = require('../js/imgflip');
+
 
 // Main function
 function main () {
