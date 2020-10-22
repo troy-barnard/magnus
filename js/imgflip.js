@@ -1,6 +1,5 @@
 const https = require("https");
 const { HTTPError } = require('discord.js');
-const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const axios = require('axios');
 const { resolve } = require("path");
 
