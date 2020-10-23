@@ -88,8 +88,10 @@ function getMemeList(message) {
             let embed = new Discord.MessageEmbed()
               .setTitle("Memes")
             for (let i = 0; i < memes.length; i++) {
-              embed.addField(i, memes[i].name)
-              embed.addField("Example",memes[i].url)
+              embed.addField(i + ": " +  memes[i].name, memes[i].url)
+              console.log("name", memes[i].name, true)
+              console.log("URL", memes[i].url)
+            //   embed.addField("Example",memes[i].url)
             }
             resolve(embed)
           }) 
