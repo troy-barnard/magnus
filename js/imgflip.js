@@ -2,6 +2,8 @@ const https = require("https");
 const { HTTPError } = require('discord.js');
 const axios = require('axios');
 const { resolve } = require("path");
+const Discord = require("discord.js");
+
 
 const imgFlipConfig = require('../json/secrets.json').imgflip;
 
@@ -44,25 +46,20 @@ function get_memes() {
     });
 }
 
-async function caption_image(memeIndex, text0, text1) {
+async function caption_image(memeIndex, textBoxes) {
     let memes = await this.get_memes()
-    // console.log("template_id", memeIndex)
     memes = memes.data.memes
-    // console.log(memes)
     let meme = memes[memeIndex]
-    // console.log(memeIndex, meme)
     let template_id = meme.id
     return new Promise((resolve, reject) => {
         const url = new URL(imgFlipConfig.host + '/caption_image');
         url.searchParams.set("template_id", template_id);
         url.searchParams.set("username", imgFlipConfig.auth.username);
         url.searchParams.set("password", imgFlipConfig.auth.password);
-        url.searchParams.set("text0", text0);
-        if (text1.trim() != '') {
-            url.searchParams.set("text1", text1);
+        for (let i = 0; i < textBoxes.length; i++) {
+            url.searchParams.set(`boxes[${i}][text]`, textBoxes[i])
         }
 
-        // console.log("URL:", url.toString())
         var config = {
             method: 'get',
             url: url.toString(),
@@ -73,17 +70,35 @@ async function caption_image(memeIndex, text0, text1) {
         
         return axios(config)
         .then(function (response) {
-            // console.log(JSON.stringify(response.data.data));
             resolve(response.data.data.url)
-        //   console.log("It worked I promise")
         })
         .catch(function (error) {
-            // console.log(error);
             reject(error);
         });    
     });
 
 }
 
+function getMemeList(message) {
+    return new Promise((resolve, reject) => {
+      try {
+        get_memes()
+          .then(response => {
+            let memes = response.data.memes
+            let embed = new Discord.MessageEmbed()
+              .setTitle("Memes")
+            for (let i = 0; i < memes.length; i++) {
+              embed.addField(i, memes[i].name)
+              embed.addField("Example",memes[i].url)
+            }
+            resolve(embed)
+          }) 
+      } catch (e) {
+        reject(e)
+      }
+    });
+  }
+
 exports.get_memes = get_memes;
 exports.caption_image = caption_image;
+exports.getMemeList = getMemeList;

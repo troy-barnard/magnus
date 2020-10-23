@@ -58,5 +58,10 @@
     "name" : "m.meme",
     "description" : "I will create a meme for you.",
     "example" : "m.meme 1 text1 \\ text2"
+  },
+  "memelist" : {
+    "name" : "m.memelist",
+    "description" : "I will print a list of memes.",
+    "example": "m.memelist"
   }
 }

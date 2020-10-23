@@ -19,6 +19,9 @@ const handlers = {
   'movie': handleMovie,
   'm': handleMovie,
   'meme': handleMeme,
+  'memelist': handleGetMemes,
+  'memeslist': handleGetMemes,
+  'ml': handleGetMemes,
   'speak': handleSpeak,
   'hi': handleSpeak,
   'random': handleRandom,
@@ -138,18 +141,22 @@ function handleMovie(message) {
 function handleMeme(message) {
   return new Promise((resolve, reject) => {
     try {
-      // console.log('responding to message:', message.content)
       let content = message.content
       let params = content.trim().split(" ")
-      // let subtringIndex = params.shift().length
       let memeIndex = params[1]
       let substrIndex = content.indexOf(memeIndex) + memeIndex.length
-      let memeTextArray = content.substring(substrIndex).split('\\')
-      // subtringIndex += memeIndex.toString().length + 2
-      // let text = message.content.trim().subtring(subtringIndex)
-      // console.log("memeIndex", memeIndex) 
-      // console.log("params", params)
-      resolve(meme.caption_image(memeIndex, memeTextArray[0], memeTextArray[1]));
+      let textBoxes = content.substring(substrIndex).split('\\')
+      resolve(meme.caption_image(memeIndex, textBoxes));
+    } catch (e) {
+      reject(e)
+    }
+  });
+}
+
+function handleGetMemes(message) {
+  return new Promise((resolve, reject) => {
+    try {
+      resolve(meme.getMemeList())
     } catch (e) {
       reject(e)
     }
