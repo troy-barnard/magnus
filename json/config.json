@@ -13,6 +13,10 @@
         "ytdlOptions": {
             "quality": "lowestaudio",
             "filter": "audioonly"
+        },
+        "playOptions": {
+            "seek": 0,
+            "volume": 0.15
         }
     },
     "omdb": {

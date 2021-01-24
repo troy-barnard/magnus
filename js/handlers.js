@@ -1,6 +1,7 @@
 // Third party imports
 const Discord = require("discord.js");
 const ytdl = require('ytdl-core');
+const ytsr = require('ytsr');
 
 // Local imports
 const omdb = require("./omdb");
@@ -9,6 +10,7 @@ const Utils = require('./utils');
 const commands = require('../json/commands.json');
 const config = require('../json/config.json');
 const chillMixes = config.chill.mixes;
+const MSG = require('../json/messages.json');
 
 
 const handlers = {
@@ -29,6 +31,8 @@ const handlers = {
   'r': handleRandom,
   'flip': handleFlip,
   'cointoss': handleFlip,
+  'play': handlePlay,
+  'p': handlePlay
 }
 module.exports = handlers;
 
@@ -77,6 +81,7 @@ function handleChill(message) {
 
         const shuffledChill = shuffle(chillMixes);
         (function chillOut(chilldex) {
+          console.log("Playing: " + shuffledChill[chilldex % shuffledChill.length])
           const dispatcher = connection.play(
             ytdl(
               shuffledChill[chilldex % shuffledChill.length],
@@ -84,8 +89,12 @@ function handleChill(message) {
             ),
             config.chill.streamOptions
           );
-
-          dispatcher.on('end', chillOut(chilldex + 1));
+          if (chilldex < shuffledChill.length) {
+            dispatcher.on('finish', () => chillOut(chilldex + 1));
+          }
+          else {
+            dispatcher.on('finish', () => connection.disconnect()); // disconnect if out of chill music to play
+          }
         })(0);
 
       }).catch(err => {
@@ -116,15 +125,16 @@ function handleMovie(message) {
             .addField('Directed By', json.Director)
             .addField('Staring', json.Actors)
             .addField('Plot', json.Plot);
-          
           ratings && ratings.forEach(r => {
-            //console.log(r)
             let source = r.Source;
             let score = r.Value;
             ratingsString += `___${source}___: ${score} \n`;
-            embed.addField(`${source}: `, score);
+            embed.addField(`${source} `, score);
           });
-          resolve(embed);
+          searchYT(json.Title + " trailer").then(playbackURL => {
+            embed.addField('Trailer', playbackURL);
+            resolve(embed);
+          })
         } else {
           resolve("Sorry bud, I couldn't find any results for that.");
         }
@@ -175,4 +185,57 @@ function handleFlip(message) {
   return new Promise((resolve, reject) => {
     resolve(Utils.randomNum(0, 1) ? 'Heads': 'Tails');
   });
+}
+
+function handlePlay(message) {
+  return new Promise((resolve, reject) => {
+    const queryString = message.content.slice(message.content.indexOf(" ")).trim();
+
+    const ctx = {
+      "user": message.author.tag,
+      "action": "play",
+      "channel": message.author.channel
+    };
+
+    if (!message.guild) {
+      reject(MSG.chill.UNKNOWN_CHANNEL, ctx, true);
+    }
+
+    const botVC = message.member.voice.channel;
+    if (botVC) {
+      botVC.join().then(connection => { 
+        resolve(`Playing in the ${botVC.name} voice channel`);
+        searchYT(queryString).then(playbackURL => {
+          console.log("Search result", playbackURL)
+          const dispatcher = connection.play(
+            ytdl(
+              playbackURL,
+              config.chill.ytdlOptions
+            ),
+            config.chill.playOptions
+          );
+          dispatcher.on('finish', () => connection.disconnect());
+        })
+      })
+    }
+  })
+}
+
+function searchYT(queryString) {
+  return new Promise((resolve, reject) => {
+    ytsr.getFilters(queryString).then(filters1 => {
+      const filter1 = filters1.get('Type').get('Video');
+      const options = {
+        pages: 1,
+      };
+      ytsr(filter1.url, options).then(searchResults => {
+        let playbackURL = searchResults.items[0].url;
+        resolve(playbackURL);
+      });
+    });
+  })
+}
+
+function shuffle(stringArray) {
+  return stringArray.sort(() => Math.random() - 0.5);
 }
