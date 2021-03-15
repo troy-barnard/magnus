@@ -125,8 +125,13 @@ function handleMovie(message) {
             .addField('Directed By', json.Director)
             .addField('Staring', json.Actors)
             .addField('Plot', json.Plot);
-          if (json.Poster != null && json.Poster != 'N/A') {
-            embed.setImage(json.Poster)
+          let valid = /^(ftp|http|https):\/\/[^ "]+$/.test(json.Poster);
+          if (valid) {
+            try {
+              embed.setImage(json.Poster)
+            } catch(e) {
+              reject('Error occurred setting url for poster image.')
+            }
           }
           ratings && ratings.forEach(r => {
             let source = r.Source;
@@ -134,10 +139,15 @@ function handleMovie(message) {
             ratingsString += `___${source}___: ${score} \n`;
             embed.addField(`${source} `, score);
           });
-          searchYT(json.Title + " trailer").then(playbackURL => {
-            embed.addField('Trailer', playbackURL);
+          try {
+            searchYT(json.Title + " trailer").then(playbackURL => {
+              embed.addField('Trailer', playbackURL);
+              message.channel.send(playbackURL);
+              resolve(embed);
+            })
+          } catch {
             resolve(embed);
-          })
+          }
         } else {
           resolve("Sorry bud, I couldn't find any results for that.");
         }
@@ -231,10 +241,14 @@ function searchYT(queryString) {
       const options = {
         pages: 1,
       };
-      ytsr(filter1.url, options).then(searchResults => {
-        let playbackURL = searchResults.items[0].url;
-        resolve(playbackURL);
-      });
+      try {
+        ytsr(filter1.url, options).then(searchResults => {
+          let playbackURL = searchResults.items[0].url;
+          resolve(playbackURL);
+        });
+      } catch {
+        reject();
+      }
     });
   })
 }
