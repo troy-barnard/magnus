@@ -116,15 +116,18 @@ function handleMovie(message) {
         if (json.Title) {
           const ratings = json.Ratings;
           let ratingsString = '';
+          console.log("JSON>>>>>\n",json);
           const embed = new Discord.MessageEmbed()
             .setColor('#0099ff')
-            .setImage(json.Poster)
             .setTitle(json.Title)
             .addField('Year', json.Year)
             .addField('Rated', json.Rated)
             .addField('Directed By', json.Director)
             .addField('Staring', json.Actors)
             .addField('Plot', json.Plot);
+          if (json.Poster != null && json.Poster != 'N/A') {
+            embed.setImage(json.Poster)
+          }
           ratings && ratings.forEach(r => {
             let source = r.Source;
             let score = r.Value;
