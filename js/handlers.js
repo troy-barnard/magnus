@@ -116,7 +116,6 @@ function handleMovie(message) {
         if (json.Title) {
           const ratings = json.Ratings;
           let ratingsString = '';
-          console.log("JSON>>>>>\n",json);
           const embed = new Discord.MessageEmbed()
             .setColor('#0099ff')
             .setTitle(json.Title)
