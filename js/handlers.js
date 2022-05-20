@@ -139,7 +139,7 @@ function handleMovie(message) {
             embed.addField(`${source} `, score);
           });
           try {
-            searchYT(json.Title + " trailer")
+            searchYT(`${json.Title} trailer ${json.Year} ${json.Director}`)
             .then(playbackURL => {
               embed.addField('Trailer', playbackURL);
               message.channel.send(playbackURL);
