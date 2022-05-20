@@ -139,12 +139,14 @@ function handleMovie(message) {
             embed.addField(`${source} `, score);
           });
           try {
-            searchYT(json.Title + " trailer").then(playbackURL => {
+            searchYT(json.Title + " trailer")
+            .then(playbackURL => {
               embed.addField('Trailer', playbackURL);
               message.channel.send(playbackURL);
               resolve(embed);
             })
-          } catch {
+            .catch(e => resolve(embed));
+          } catch (e) {
             resolve(embed);
           }
         } else {
@@ -244,11 +246,13 @@ function searchYT(queryString) {
         ytsr(filter1.url, options).then(searchResults => {
           let playbackURL = searchResults.items[0].url;
           resolve(playbackURL);
-        });
+        })
+        .catch(e => reject());
       } catch {
         reject();
       }
-    });
+    })
+    .catch(e => reject());
   })
 }
 
