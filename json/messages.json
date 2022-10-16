@@ -2,9 +2,9 @@
     "UNKNOWN_COMMAND": {
         "console": {
             "type": "warning",
-            "message": "User {user} asked Magnus to perform the action \"{action}\", without an associated handler"
+            "message": "User {user} asked Magnus to perform the command \"{command}\", without an associated handler"
         },
-        "discord": "I'm sorry, I'm not familiar with the \"{action}\" command..."
+        "discord": "I'm sorry, I'm not familiar with the \"{command}\" command..."
     },
 
     "FAILURE_COMMAND": {
@@ -18,7 +18,7 @@
     "SUCCESSFUL_COMMAND": {
         "console": {
             "type": "info",
-            "message": "User {user} asked Magnus to perform the action \"{action}\" successfully"
+            "message": "User {user} asked Magnus to perform the command \"{command}\" successfully"
         }
     },
 
@@ -36,19 +36,62 @@
         }
     },
 
-    "movie": { },
+    "meme": {
+        "UNABLE_TO_CONNECT_TO_IMGFLIP": {
+            "console": {
+                "type": "error",
+                "message": "Magnus was unable to connect to imgflip."
+            },
+            "discord": "I'm sorry, I was not able to create your meme for you."
+        }
+    },
+
+    "memes": {
+        "UNABLE_TO_CONNECT_TO_IMGFLIP": {
+            "console": {
+                "type": "error",
+                "message": "Magnus was unable to connect to imgflip."
+            },
+            "discord": "I'm sorry, I was not able to create your meme for you."
+        }
+    },
+
+    "movie": {
+        "NO_MOVIE_PROVIDED": {
+            "console": {
+                "type": "warning",
+                "message": "User {user} did not provide an argument to the \"{command}\" command."
+            },
+            "discord": "You need to provide a movie for me to lookup."
+        },
+        "UNABLE_TO_CONNECT_TO_OMDB": {
+            "console": {
+                "type": "error",
+                "message": "Magnus was unable to perform lookup of the movie {movie} against omdb: {error}"
+            },
+            "discord": "I had a problem getting information on that one..."
+        },
+        "NO_MOVIE_RESULTS": {
+            "console": {
+                "type": "info",
+                "message": "User {user} asked for Magnus to lookup the movie {movie} but OMDB returned 0 results."
+            },
+            "discord": "Sorry bud, I couldn't find any results for that."
+        }
+    },
+
     "chill": {
         "NONPUBLIC_CHANNEL": {
             "console": {
                 "type": "warning",
-                "message": "User {user} asked Magnus to perform the action \"{action}\" while in an unacceptable channel: \"{channel}\""
+                "message": "User {user} asked Magnus to perform the command \"{command}\" while in an unacceptable channel: \"{channel}\""
             },
             "discord": "I'm sorry, you must make this command in a public channel. Unfortunately, \"{channel}\" doesn't count."
         },
         "NON_VOICE_CHANNEL": {
             "console": {
                 "type": "warning",
-                "message": "User {user} asked Magnus to perform the action \"{action}\" while not in a voice channel"
+                "message": "User {user} asked Magnus to perform the command \"{command}\" while not in a voice channel"
             },
             "discord": "I'm sorry, you must join a voice channel before I can start dropping chill beats in it!"
         },
@@ -62,6 +105,5 @@
     },
     "help": {},
     "speak": {},
-    "meme": {},
     "play": {}
 }
