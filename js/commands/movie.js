@@ -1,7 +1,7 @@
 // Imports
 const Discord = require("discord.js");
-const omdb = require("../omdb");
-const youtube = require("../youtube");
+const omdb = require("../apis/omdb");
+const youtube = require("../apis/youtube");
 const MSG = require("../../json/messages.json");
 
 // Global Constants

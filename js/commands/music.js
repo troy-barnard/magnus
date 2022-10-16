@@ -1,6 +1,6 @@
 // Imports
 const ytdl = require("ytdl-core");
-const youtube = require("../youtube");
+const youtube = require("../apis/youtube");
 const config = require("../../json/config.json");
 const MSG = require("../../json/messages.json");
 

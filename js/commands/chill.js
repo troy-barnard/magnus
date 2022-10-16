@@ -1,6 +1,6 @@
 // Imports
 const UTILS = require("../utils");
-const YTDL = require("YTDL-core");
+const YTDL = require("ytdl-core");
 const CONFIG = require("../json/CONFIG.json");
 const MSG = require("../../json/messages.json");
 

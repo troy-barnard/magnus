@@ -1,5 +1,5 @@
 // Imports
-const meme = require("./imgflip");
+const meme = require("../apis/imgflip");
 const MSG = require("../../json/messages.json");
 
 // Global Constants

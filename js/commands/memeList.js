@@ -1,5 +1,5 @@
 // Imports
-const meme = require("./imgflip");
+const meme = require("../apis/imgflip");
 
 // Global Constants
 const NAME = "memes";
