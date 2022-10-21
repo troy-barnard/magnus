@@ -1,7 +1,7 @@
 // Imports
 const UTILS = require("../utils");
 const YTDL = require("ytdl-core");
-const CONFIG = require("../json/CONFIG.json");
+const CONFIG = require("../../json/config.json");
 const MSG = require("../../json/messages.json");
 
 // Global Constants

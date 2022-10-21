@@ -4,7 +4,7 @@ const axios = require("axios");
 const { resolve } = require("path");
 const Discord = require("discord.js");
 
-const imgFlipConfig = require("../json/secrets.json").imgflip;
+const imgFlipConfig = require("../../json/secrets.json").imgflip;
 
 function get_memes() {
   return new Promise((resolve, reject) => {

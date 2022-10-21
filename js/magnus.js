@@ -10,14 +10,15 @@ const discordToken = require("../json/secrets.json").discord.auth.token;
 // Setup command handlers
 const _COMMANDS_LIST = [
   // For help, we want to import all the other commands to list them here.
-  require("./chill"),
-  require("./cointoss"),
-  require("./memeCreate"),
-  require("./memeList"),
-  require("./movie"),
-  require("./music"),
-  require("./random"),
-  require("./speak"),
+  require("./commands/chill"),
+  require("./commands/cointoss"),
+  require("./commands/memeCreate"),
+  require("./commands/memeList"),
+  require("./commands/help"),
+  require("./commands/movie"),
+  require("./commands/music"),
+  require("./commands/random"),
+  require("./commands/speak"),
 ];
 const COMMAND_HANDLERS = {};
 for (let _command of _COMMANDS_LIST) {
@@ -28,6 +29,7 @@ for (let _command of _COMMANDS_LIST) {
     COMMAND_HANDLERS[alias] = _command;
   }
 }
+console.log(COMMAND_HANDLERS);
 
 // Main function
 function main() {
@@ -84,7 +86,9 @@ function onMessage(message) {
             // If the reject didn't conform to this "standard", it's likely a reject that happened in an "unexpected" situation
             const situation = {
               command: command,
-              args: "".join(arguments.map((x, i) => `arg[${i}]: ${x}`)),
+              // args: "".join(arguments.map((x, i) => `arg[${i}]: ${x}`)),
+              // args: arguments, // I guess args is an object rather than array now?
+              args: arguments.map((k, v) => `${k}: ${v}`, []).join("\n"),
             };
             Utils.log(MSG.FAILURE_COMMAND, situation, message);
           }

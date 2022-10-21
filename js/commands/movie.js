@@ -2,6 +2,7 @@
 const Discord = require("discord.js");
 const omdb = require("../apis/omdb");
 const youtube = require("../apis/youtube");
+const CONFIG = require("../../json/config.json");
 const MSG = require("../../json/messages.json");
 
 // Global Constants

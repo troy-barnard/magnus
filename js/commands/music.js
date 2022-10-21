@@ -1,7 +1,7 @@
 // Imports
 const ytdl = require("ytdl-core");
 const youtube = require("../apis/youtube");
-const config = require("../../json/config.json");
+const CONFIG = require("../../json/config.json");
 const MSG = require("../../json/messages.json");
 
 // Global Constants
@@ -39,8 +39,8 @@ exports.handleMessage = function (message) {
 
           const dispatcher = connection.play(
             // TODO: consider renaming these config options to be more generic
-            ytdl(playbackURL, config.chill.ytdlOptions),
-            config.chill.playOptions
+            ytdl(playbackURL, CONFIG.chill.ytdlOptions),
+            CONFIG.chill.playOptions
           );
 
           dispatcher.on("finish", () => connection.disconnect());
@@ -49,5 +49,3 @@ exports.handleMessage = function (message) {
     }
   });
 };
-
-module.exports = handlePlay;

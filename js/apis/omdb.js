@@ -1,5 +1,5 @@
 const http = require("http");
-const secrets = require("../json/secrets.json").omdb;
+const secrets = require("../../json/secrets.json").omdb;
 const config = require("../../json/config.json").omdb;
 
 exports.query = function (queryString) {

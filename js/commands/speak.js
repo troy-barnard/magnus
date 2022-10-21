@@ -1,3 +1,6 @@
+// Imports
+const CONFIG = require("../../json/config.json");
+
 // Global Constants
 const NAME = "speak";
 

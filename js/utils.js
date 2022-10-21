@@ -1,5 +1,24 @@
 const chalk = require("chalk");
 
+Object.prototype.map =
+  Object.prototype.map ||
+  function (func, init) {
+    "use strict";
+    let result = []; // init === undefined || init === null ? "" : init;
+    for (let key in this) {
+      if (this.hasOwnProperty(key)) {
+        let value = this[key];
+
+        if (result instanceof Array) {
+          result = [...result, func(key, value)];
+        } else {
+          result = result + func(key, value);
+        }
+      }
+    }
+    return result;
+  };
+
 // Ripped from https://stackoverflow.com/a/18234317
 String.prototype.formatUnicorn =
   String.prototype.formatUnicorn ||

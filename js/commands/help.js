@@ -1,5 +1,6 @@
 // Imports
 const Discord = require("discord.js");
+const CONFIG = require("../../json/config.json");
 
 // Global Constants
 const NAME = "help";

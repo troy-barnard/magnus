@@ -1,3 +1,7 @@
+// Imports
+const CONFIG = require("../../json/config.json");
+const UTILS = require("../utils");
+
 // Global Constants
 const NAME = "cointoss";
 
@@ -17,6 +21,6 @@ exports.description =
 exports.example = `${CONFIG.commandPrefix}${NAME}`;
 exports.handleMessage = function (_message) {
   return new Promise((resolve, _reject) => {
-    resolve(Utils.randomNum(0, 1) ? "Heads" : "Tails");
+    resolve(UTILS.randomNum(0, 1) ? "Heads" : "Tails");
   });
 };
