@@ -3,10 +3,31 @@ const Discord = require("discord.js");
 
 // Local imports
 const Utils = require("./utils");
-const handlers = require("./handlers");
 const MSG = require("../json/messages.json");
 const config = require("../json/config.json");
 const discordToken = require("../json/secrets.json").discord.auth.token;
+
+// Setup command handlers
+const _COMMANDS_LIST = [
+  // For help, we want to import all the other commands to list them here.
+  require("./chill"),
+  require("./cointoss"),
+  require("./memeCreate"),
+  require("./memeList"),
+  require("./movie"),
+  require("./music"),
+  require("./random"),
+  require("./speak"),
+];
+const COMMAND_HANDLERS = {};
+for (let _command of _COMMANDS_LIST) {
+  // Add handler to point to the Command object/export based on name
+  // and all aliases for the command
+  COMMAND_HANDLERS[_command.name] = _command;
+  for (let alias of _command.aliases) {
+    COMMAND_HANDLERS[alias] = _command;
+  }
+}
 
 // Main function
 function main() {
@@ -43,8 +64,9 @@ function onMessage(message) {
       .toLowerCase();
 
     // If we have a handler defined, execute it with the message and reply with the result
-    if (handlers[command] !== undefined) {
-      handlers[command](message)
+    if (COMMAND_HANDLERS[command] !== undefined) {
+      COMMAND_HANDLERS[command]
+        .handleMessage(message)
         .then((data) => {
           // All handlers should resolve with data that can be replied with.
           Utils.log(MSG.SUCCESSFUL_COMMAND, {
