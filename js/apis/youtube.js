@@ -18,11 +18,11 @@ exports.search = function (queryString) {
               const playbackURL = searchResults.items[0].url;
               resolve(playbackURL);
             })
-            .catch((e) => reject());
-        } catch {
-          reject();
+            .catch((e) => reject(e));
+        } catch (e) {
+          reject(e);
         }
       })
-      .catch((e) => reject());
+      .catch((e) => reject(e));
   });
 };

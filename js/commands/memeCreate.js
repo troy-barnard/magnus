@@ -26,7 +26,7 @@ exports.handleMessage = function (message) {
       const memeIndex = params[1];
       const substrIndex = content.indexOf(memeIndex) + memeIndex.length;
       const textBoxes = content.substring(substrIndex).split("\\");
-      resolve(meme.caption_image(memeIndex, textBoxes));
+      resolve(meme.createMeme(memeIndex, textBoxes));
     } catch (e) {
       reject(MSG.meme.UNABLE_TO_CONNECT_TO_IMGFLIP, { error: e }, true);
     }

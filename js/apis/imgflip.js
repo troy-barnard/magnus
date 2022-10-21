@@ -50,13 +50,13 @@ function get_memes() {
   });
 }
 
-async function caption_image(memeIndex, textBoxes) {
+async function createMeme(memeIndex, textBoxes) {
   let memes = await this.get_memes();
   memes = memes.data.memes;
   let meme = memes[memeIndex];
   let template_id = meme.id;
   return new Promise((resolve, reject) => {
-    const url = new URL(imgFlipConfig.host + "/caption_image");
+    const url = new URL(imgFlipConfig.host + "/createMeme");
     url.searchParams.set("template_id", template_id);
     url.searchParams.set("username", imgFlipConfig.auth.username);
     url.searchParams.set("password", imgFlipConfig.auth.password);
@@ -99,6 +99,6 @@ function getMemeList(message) {
   });
 }
 
-exports.get_memes = get_memes;
-exports.caption_image = caption_image;
+// exports.get_memes = get_memes; // this is more a private function if anything
+exports.createMeme = createMeme;
 exports.getMemeList = getMemeList;
