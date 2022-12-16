@@ -37,7 +37,7 @@ exports.handleMessage = function (message) {
       } catch (error) {
         console.error(error);
       }
-      resolve(`I Die in voice channel`);
+      resolve(`I die in voice channel`);
     }
   });
 };
