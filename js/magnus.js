@@ -19,6 +19,7 @@ const _COMMANDS_LIST = [
   require("./commands/music"),
   require("./commands/random"),
   require("./commands/speak"),
+  require("./commands/stop"),
 ];
 const COMMAND_HANDLERS = {};
 for (let _command of _COMMANDS_LIST) {
