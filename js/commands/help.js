@@ -15,6 +15,7 @@ const COMMANDS = [
   require("./music"),
   require("./random"),
   require("./speak"),
+  require("./stop"),
 ];
 
 // Exports
