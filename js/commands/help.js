@@ -29,7 +29,7 @@ exports.handleMessage = function (_message) {
 
     for (let command of COMMANDS) {
       embed.addField(
-        command.name,
+        `${command.name} (${command.aliases.join(", ")})`,
         `${command.description}
         Example: ${command.example}`
       );
