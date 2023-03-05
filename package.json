@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/troytheboy/magnus#readme",
   "dependencies": {
-    "@discordjs/opus": "^0.3.3",
+    "@discordjs/opus": "^0.8.0",
     "axios": "^0.21.1",
     "chalk": "^4.0.0",
     "discord.js": "^12.4.0",
