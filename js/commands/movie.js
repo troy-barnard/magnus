@@ -42,7 +42,8 @@ exports.handleMessage = function (message) {
               .addField("Rated", json.Rated)
               .addField("Directed By", json.Director)
               .addField("Staring", json.Actors)
-              .addField("Plot", json.Plot);
+              .addField("Plot", json.Plot)
+              .addField("Runtime", json.Runtime);
 
             const valid = /^(ftp|http|https):\/\/[^ "]+$/.test(json.Poster);
 
@@ -65,7 +66,7 @@ exports.handleMessage = function (message) {
                 embed.addField(`${source} `, score);
               });
 
-            const youtubeQueryString = `${json.Title} trailer ${json.Year} ${json.Director}`;
+            const youtubeQueryString = `${json.Title} trailer ${json.Year}`;
             try {
               youtube
                 .search(youtubeQueryString)
