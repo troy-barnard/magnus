@@ -38,18 +38,31 @@ exports.handleMessage = function (message) {
             const embed = new Discord.MessageEmbed()
               .setColor("#0099ff")
               .setTitle(json.Title)
-              .addField("Year", json.Year)
-              .addField("Rated", json.Rated)
-              .addField("Directed By", json.Director)
-              .addField("Staring", json.Actors)
-              .addField("Plot", json.Plot)
-              .addField("Runtime", json.Runtime);
+              .setDescription(json.Plot)
+              .addFields({name: "Staring", value: json.Actors, inline: false})
+              .addFields(
+                {name: "Released", value: json.Released, inline: true},
+                {name: "Genre", value: json.Genre, inline: true},
+                {name: "Rated", value: json.Rated, inline: true},
+                {name: "Directed By", value: json.Director, inline: true},
+                {name: "Runtime", value: json.Runtime, inline: true},
+              );
+
+              if (json.Runtime) {
+                const runtime = json.Runtime.split(' ')[0];
+                var tight90 = "🙅‍♂️";
+                if (runtime > 80 && runtime < 100) {
+                  tight90 = "👌";
+                }
+                embed.addFields({name: "TIGHT 90", value: tight90, inline: true});
+
+              }
 
             const valid = /^(ftp|http|https):\/\/[^ "]+$/.test(json.Poster);
 
             if (valid) {
               try {
-                embed.setImage(json.Poster);
+                embed.setThumbnail(json.Poster);
               } catch (e) {
                 // reject("Error occurred setting url for poster image.");
 
@@ -63,7 +76,7 @@ exports.handleMessage = function (message) {
                 let source = r.Source;
                 let score = r.Value;
                 ratingsString += `___${source}___: ${score} \n`;
-                embed.addField(`${source} `, score);
+                embed.addFields({name:`${source} `, value: score, inline: true});
               });
 
             const youtubeQueryString = `${json.Title} trailer ${json.Year}`;
@@ -71,7 +84,7 @@ exports.handleMessage = function (message) {
               youtube
                 .search(youtubeQueryString)
                 .then((playbackURL) => {
-                  embed.addField("Trailer", playbackURL);
+                  // embed.addField("Trailer", playbackURL);
                   message.channel.send(playbackURL);
                   resolve(embed);
                 })
