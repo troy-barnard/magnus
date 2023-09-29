@@ -6,7 +6,19 @@ exports.query = function (queryString) {
   return new Promise((resolve, reject) => {
     const url = new URL(config.host);
     url.searchParams.set("apikey", secrets.auth.key);
+    try {
+      if (queryString.includes("||")) {
+        let year = queryString.split("||")[1].trim();
+        queryString = queryString.split("||")[0].trim();
+        url.searchParams.set("y", year);
+      }
+    } catch (e) {
+      console.log(e);
+    }
     url.searchParams.set("t", queryString);
+    url.searchParams.set("type", "movie");
+    
+
     http
       .get(url.toString(), (response) => {
         const { statusCode } = response;
@@ -41,6 +53,7 @@ exports.query = function (queryString) {
           } catch (e) {
             reject(e);
           }
+
           resolve(parsedData);
         });
       })
