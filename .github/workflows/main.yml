@@ -1,15 +1,13 @@
-on: deployment
-name: "Setup secrets json"
-
+name: learn-github-actions
+run-name: ${{ github.actor }} is learning GitHub Actions
+on: [push]
 jobs:
-  my-job:
-    name: My Job
+  check-bats-version:
     runs-on: ubuntu-latest
     steps:
-    - name: create-api-keys-json
-      id: create-api-keys-json
-      uses: jsdaniell/create-json@1.1.2
-      with:
-        name: "secrets.json"
-        json: ${{ secrets.SECRETS_JSON }}
-        dir: 'json/' 
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      - run: npm install -g bats
+      - run: bats -v
