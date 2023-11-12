@@ -14,4 +14,4 @@ jobs:
         key: ${{ secrets.DEPLOY_KEY }}
         script: |
           whoami
-          ls -al
+          bash restart-magnus.sh
