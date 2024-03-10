@@ -80,6 +80,30 @@
         }
     },
 
+    "tv": {
+        "NO_MOVIE_PROVIDED": {
+            "console": {
+                "type": "warning",
+                "message": "User {user} did not provide an argument to the \"{command}\" command."
+            },
+            "discord": "You need to provide a series for me to lookup."
+        },
+        "UNABLE_TO_CONNECT_TO_OMDB": {
+            "console": {
+                "type": "error",
+                "message": "Magnus was unable to perform lookup of the series {series} against omdb: {error}"
+            },
+            "discord": "I had a problem getting information on that one..."
+        },
+        "NO_MOVIE_RESULTS": {
+            "console": {
+                "type": "info",
+                "message": "User {user} asked for Magnus to lookup the series {series} but OMDB returned 0 results."
+            },
+            "discord": "Sorry bud, I couldn't find any results for that."
+        }
+    },
+
     "chill": {
         "NONPUBLIC_CHANNEL": {
             "console": {

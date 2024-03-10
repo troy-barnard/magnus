@@ -2,7 +2,7 @@ const http = require("http");
 const secrets = require("../../json/secrets.json").omdb;
 const config = require("../../json/config.json").omdb;
 
-exports.query = function (queryString) {
+exports.query = function (queryString, typeString) {
   return new Promise((resolve, reject) => {
     const url = new URL(config.host);
     url.searchParams.set("apikey", secrets.auth.key);
@@ -16,7 +16,9 @@ exports.query = function (queryString) {
       console.log(e);
     }
     url.searchParams.set("t", queryString);
-    url.searchParams.set("type", "movie");
+    if (typeString.toLowerCase() === 'movie' || typeString.toLowerCase() === 'series') {
+      url.searchParams.set("type", typeString);
+    }
     
 
     http
