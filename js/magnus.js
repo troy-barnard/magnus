@@ -16,7 +16,7 @@ const _COMMANDS_LIST = [
   require("./commands/memeList"),
   require("./commands/help"),
   require("./commands/movie"),
-  require("./commands/tv"),
+  require("./commands/series"),
   require("./commands/music"),
   require("./commands/random"),
   require("./commands/speak"),
