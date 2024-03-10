@@ -12,6 +12,7 @@ const COMMANDS = [
   require("./memeCreate"),
   require("./memeList"),
   require("./movie"),
+  require("./series"),
   require("./music"),
   require("./random"),
   require("./speak"),
