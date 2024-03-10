@@ -27,7 +27,7 @@ exports.handleMessage = function (message) {
 
     if (queryString) {
       omdb
-        .query(queryString)
+        .query(queryString, 'series')
 
         // OMDB query results handler
         .then((json) => {
