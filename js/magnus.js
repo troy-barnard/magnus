@@ -21,6 +21,7 @@ const _COMMANDS_LIST = [
   require("./commands/random"),
   require("./commands/speak"),
   require("./commands/stop"),
+  require("./commands/embed"),
 ];
 const COMMAND_HANDLERS = {};
 for (let _command of _COMMANDS_LIST) {
