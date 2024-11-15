@@ -56,7 +56,7 @@ exports.handleMessage = function (_message) {
           .setDescription(
                 `"${trackName}"
                 ${albumName} (${album.release_date.split('-')[0]})
-                _${artistsName}_
+                **${artistsName}**
                 [Open In Spotify](${spotifyAppURL})`
             )
           // .setURL(spotifyAppURL)
