@@ -66,7 +66,7 @@
   },
   "embed":{
     "name": "m.embed",
-    "description": "I will attempt to embed a link",
+    "description": "I will attempt to embed a spotify link",
     "m.embed https://open.spotify.com/track/7w04gIWA7mIbqR03Ghyrkl?si=29bb003cbb704930"
   }
 }

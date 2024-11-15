@@ -27,7 +27,8 @@ exports.handleMessage = function (_message) {
     const params = content.trim().split(" ");
     try {
       const embedValue = params[1];
-      let trackID = '7n1ViWkFunumzMPfjNVLz4'
+      // let trackID = '7n1ViWkFunumzMPfjNVLz4'
+      let trackID = ''
       if (embedValue != '') {
         trackID = embedValue.substring(embedValue.lastIndexOf('/') + 1);
       }  
@@ -52,13 +53,14 @@ exports.handleMessage = function (_message) {
       const trackName = parsedData.name;
       const preview_url = parsedData.preview_url;
       const embed = new Discord.MessageEmbed()
-          .setDescription(trackName + ' by ' + artistsName)
-          .setURL(preview_url)
-          .setImage(albumArtURL)
-          // .addField('\uD83C\uDFB6', trackName)
-          // .addField("\uD83D\uDCBF", albumName)
-          // .addField('\uD83D\uDC64', artistsName)
-          .addField('\u200B', `[Song Preview](${preview_url})`);
+          .setDescription(
+                `"${trackName}"
+                ${albumName} (${album.release_date.split('-')[0]})
+                _${artistsName}_
+                [Song Preview](${preview_url})`
+            )
+          // .setURL(preview_url)
+          .setThumbnail(albumArtURL)
       resolve(embed);
     } catch (e) {
       console.error(e);
