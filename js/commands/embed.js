@@ -51,15 +51,15 @@ exports.handleMessage = function (_message) {
       //   ar
       // });
       const trackName = parsedData.name;
-      const preview_url = parsedData.preview_url;
+      const spotifyAppURL = parsedData.external_urls.spotify;
       const embed = new Discord.MessageEmbed()
           .setDescription(
                 `"${trackName}"
                 ${albumName} (${album.release_date.split('-')[0]})
                 _${artistsName}_
-                [Song Preview](${preview_url})`
+                [Open In Spotify](${spotifyAppURL})`
             )
-          // .setURL(preview_url)
+          // .setURL(spotifyAppURL)
           .setThumbnail(albumArtURL)
       resolve(embed);
     } catch (e) {
