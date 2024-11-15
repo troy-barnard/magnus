@@ -53,14 +53,9 @@ exports.handleMessage = function (_message) {
       const trackName = parsedData.name;
       const spotifyAppURL = parsedData.external_urls.spotify;
       const embed = new Discord.MessageEmbed()
-          .setDescription(
-                `"${trackName}"
-                ${albumName} (${album.release_date.split('-')[0]})
-                **${artistsName}**
-                [Open In Spotify](${spotifyAppURL})`
-            )
-          // .setURL(spotifyAppURL)
+          .setDescription(`[**${trackName}**](${spotifyAppURL})\n${artistsName}`)
           .setThumbnail(albumArtURL)
+          .setFooter(`${albumName} (${album.release_date.split('-')[0]})`, albumArtURL);
       resolve(embed);
     } catch (e) {
       console.error(e);
