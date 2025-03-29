@@ -39,7 +39,7 @@ exports.handleMessage = function (message) {
               .setColor("#0099ff")
               .setTitle(json.Title)
               .setDescription(json.Plot)
-              .addFields({name: "Staring", value: json.Actors, inline: false})
+              .addFields({name: "Starring", value: json.Actors, inline: false})
               .addFields(
                 {name: "Released", value: json.Released, inline: true},
                 {name: "Genre", value: json.Genre, inline: true},
