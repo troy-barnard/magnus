@@ -1,5 +1,7 @@
 // Third party imports
-const Discord = require("discord.js");
+const { Client, Events, GatewayIntentBits, Collection } = require('discord.js');
+const path = require('node:path');
+const fs = require('node:fs');
 
 // Local imports
 const Utils = require("./utils");
@@ -34,10 +36,13 @@ for (let _command of _COMMANDS_LIST) {
 }
 console.log(COMMAND_HANDLERS);
 
+// // Slash Commands
+// require('./commands/utility/slash-commands/ping');
+
 // Main function
 function main() {
   Utils.log(MSG.MAGNUS_INIT);
-  const client = new Discord.Client();
+  const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
   // Register discord event handlers
   client.on("ready", onReady.bind(null, client));
@@ -45,6 +50,55 @@ function main() {
 
   // Log Magnus into the discord
   client.login(discordToken);
+
+  registerSlashCommands(client);   
+}
+
+// Register slash commands
+function registerSlashCommands(client) {
+  client.commands = new Collection();
+
+  const foldersPath = path.join(__dirname, './commands/utility');
+  const commandFolders = fs.readdirSync(foldersPath);
+
+  for (const folder of commandFolders) {
+    const commandsPath = path.join(foldersPath, folder);
+    const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+    for (const file of commandFiles) {
+      const filePath = path.join(commandsPath, file);
+      const command = require(filePath);
+      // Set a new item in the Collection with the key as the command name and the value as the exported module
+      if ('data' in command && 'execute' in command) {
+        client.commands.set(command.data.name, command);
+        console.log(`Registering command: ${command.data.name}`)
+      } else {
+        console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+      }
+    }
+  }
+
+  client.on(Events.InteractionCreate, async interaction => {
+    if (!interaction.isChatInputCommand()) return;
+    
+    const command = interaction.client.commands.get(interaction.commandName);
+
+    if (!command) {
+      console.error(`No command matching ${interaction.commandName} was found.`);
+      return;
+    }
+  
+    try {
+      console.log(`handling slash command ${interaction.commandName}`)
+      await command.execute(interaction);
+    } catch (error) {
+      console.error(error);
+      if (interaction.replied || interaction.deferred) {
+        await interaction.followUp({ content: 'There was an error while executing this command!', flags: MessageFlags.Ephemeral });
+      } else {
+        await interaction.reply({ content: 'There was an error while executing this command!', flags: MessageFlags.Ephemeral });
+      }
+    }
+  });
 }
 
 // Function that runs after Magnus is initialized
